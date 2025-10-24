@@ -4,17 +4,10 @@ import "./globals.css";
 import Signup from "./Pages/signup";
 import Login from "./Pages/login";
 import Reset from "./Pages/reset";
+import Deposit from "./Deposits/deposit";
+import Withdraw from "./Withdrawals/withdraw";
 
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
 
 export const metadata: Metadata = {
   title: "Tian Kay Bank App",
@@ -27,15 +20,84 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-     
-      >
-   
-      <Login/>
-      <Reset/>
-        
-      </body>
-    </html>
-  );
-}
+    <>
+      <html lang="en">
+        <body className="min-h-screen bg-gray-50 text-gray-900 mr-20 ">
+        <header >
+          <nav className="max-w-10xl mx-9xl flex gap-10 p-4 space-x-10 px-38 ml-20 h-30 ">
+            <a href="/" className="font-semibold text-3xl ">Home</a>
+            <a href="/about" className="font-semibold text-3xl">Deposits</a>
+            <a href="/about"className="font-semibold text-3xl">Withdrawals</a>
+            <a href="/about"className="font-semibold text-3xl">Transfers</a>
+  
+
+          </nav>
+          </header>
+
+<Withdraw/>
+   <main className="max-w-3xl mx-auto p-4">{children}</main>
+
+
+
+
+ <footer className="border-t  bg-white/70 backdrop-blur dark:bg-neutral-900/60 ml-100% ">
+      <div className="auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-black " >
+        <div className="grid gap-6 py-8 sm:grid-cols-3 ">
+          {/* Brand */}
+          <div>
+            <h3 className="text-lg font-semibold">YourBrand</h3>
+            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
+              Building delightful web experiences.
+            </p>
+          </div>
+
+          {/* Links */}
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-3 text-sm">
+            <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
+              About
+            </a>
+            <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
+              Blog
+            </a>
+            <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
+              Projects
+            </a>
+            <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
+              Contact
+            </a>
+          </nav>
+
+
+            <label className="block text-sm font-medium">Stay in the loop</label>
+            <div className="mt-2 flex">
+              <input
+                type="email"
+                placeholder="you@example.com"
+                className="w-full min-w-0 rounded-l-md border border-neutral-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-neutral-800 dark:border-neutral-700 dark:bg-neutral-800"
+              />
+              <button
+                type="submit"
+                className="rounded-r-md border border-neutral-800 bg-neutral-900 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800 dark:border-neutral-200 dark:bg-neutral-200 dark:text-neutral-900"
+              >
+                Join
+              </button>
+            </div>
+      
+        </div>
+
+        <div className="flex flex-col items-center justify-between gap-3 border-t py-4 text-sm text-neutral-600 dark:text-neutral-400 sm:flex-row ">
+          <p>© {2025} YourBrand. All rights reserved.</p>
+          <div className="flex items-center gap-4">
+            <a href="#" aria-label="Twitter" className="hover:underline">Twitter</a>
+            <a href="#" aria-label="GitHub" className="hover:underline">GitHub</a>
+            <a href="#" aria-label="LinkedIn" className="hover:underline">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  
+
+
+        </body>
+      </html>
+    </>)}

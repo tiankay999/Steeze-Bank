@@ -1,103 +1,184 @@
-import Image from "next/image";
+// app/page.tsx
+export default function DashboardPage() {
+  // --- mock data you'd normally fetch from your DB/API ---
+  const userName = "Steeze";
+  const accounts = [
+    { id: "checking", name: "Checking", number: "••• 4821", balance: 2450.32 },
+    { id: "savings", name: "Savings", number: "••• 0917", balance: 8150.0 },
+  ];
 
-export default function Home() {
+  const recent = [
+    { id: 1, title: "Grocery Store", type: "debit", amount: -142.55, date: "Oct 23" },
+    { id: 2, title: "Salary • Oct", type: "credit", amount: 2100.0, date: "Oct 22" },
+    { id: 3, title: "Electric Bill", type: "debit", amount: -96.2, date: "Oct 21" },
+    { id: 4, title: "Mobile Transfer", type: "debit", amount: -50, date: "Oct 20" },
+    { id: 5, title: "Interest", type: "credit", amount: 12.4, date: "Oct 19" },
+  ];
+
+  const totalBalance = accounts.reduce((sum, a) => sum + a.balance, 0);
+  const monthIn = recent.filter(r => r.type === "credit").reduce((s, r) => s + r.amount, 0);
+  const monthOut = recent.filter(r => r.type === "debit").reduce((s, r) => s + Math.abs(r.amount), 0);
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by Writing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="mx-auto max-w-6xl px-4 py-8 space-y-8">
+      {/* Top Bar / Greeting */}
+      <section className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h1 className="text-2xl font-semibold">Welcome back, {userName} 👋</h1>
+          <p className="text-sm text-neutral-400">
+            Here’s a quick overview of your accounts and recent activity.
+          </p>
+        </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+        {/* Quick Actions */}
+        <div className="flex gap-2">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/transfers"
+            className="rounded-xl border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            New Transfer
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/deposits"
+            className="rounded-xl border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800"
           >
-            Read our docs
+            Deposit
+          </a>
+          <a
+            href="/withdrawals"
+            className="rounded-xl border border-neutral-700 px-4 py-2 text-sm hover:bg-neutral-800"
+          >
+            Withdraw
           </a>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      {/* Summary Cards */}
+      <section className="grid gap-4 sm:grid-cols-3">
+        <SummaryCard label="Total Balance" value={formatMoney(totalBalance)} />
+        <SummaryCard label="This Month In" value={formatMoney(monthIn)} />
+        <SummaryCard label="This Month Out" value={formatMoney(monthOut)} />
+      </section>
+
+      {/* Accounts */}
+      <section className="grid gap-4 md:grid-cols-2">
+        {accounts.map((a) => (
+          <div
+            key={a.id}
+            className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5"
+          >
+            <div className="flex items-start justify-between">
+              <div>
+                <p className="text-sm text-neutral-400">{a.name}</p>
+                <p className="text-xl font-semibold mt-1">{formatMoney(a.balance)}</p>
+              </div>
+              <span className="rounded-full border border-neutral-800 px-3 py-1 text-xs text-neutral-400">
+                {a.number}
+              </span>
+            </div>
+            <div className="mt-4 flex gap-2">
+              <a
+                href={`/transfers?from=${a.id}`}
+                className="rounded-lg border border-neutral-800 px-3 py-2 text-sm hover:bg-neutral-900"
+              >
+                Transfer
+              </a>
+              <a
+                href={`/deposits?to=${a.id}`}
+                className="rounded-lg border border-neutral-800 px-3 py-2 text-sm hover:bg-neutral-900"
+              >
+                Deposit
+              </a>
+              <a
+                href={`/withdrawals?from=${a.id}`}
+                className="rounded-lg border border-neutral-800 px-3 py-2 text-sm hover:bg-neutral-900"
+              >
+                Withdraw
+              </a>
+            </div>
+          </div>
+        ))}
+      </section>
+
+      {/* Recent Transactions */}
+      <section className="rounded-2xl border border-neutral-800">
+        <div className="flex items-center justify-between px-5 py-4">
+          <h2 className="text-lg font-semibold">Recent Transactions</h2>
+          <a href="/transactions" className="text-sm text-neutral-400 hover:underline">
+            View all
+          </a>
+        </div>
+        <div className="divide-y divide-neutral-800">
+          {recent.map((t) => (
+            <div key={t.id} className="flex items-center justify-between px-5 py-3">
+              <div className="min-w-0">
+                <p className="truncate">{t.title}</p>
+                <p className="text-xs text-neutral-500">{t.date}</p>
+              </div>
+              <span
+                className={
+                  "font-medium " +
+                  (t.type === "credit" ? "text-emerald-400" : "text-red-400")
+                }
+                aria-label={t.type === "credit" ? "Money in" : "Money out"}
+              >
+                {t.type === "credit" ? "+" : "-"}
+                {formatMoney(Math.abs(t.amount))}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+    </main>
+  );
+}
+
+/* ---------- tiny helpers & mini component ---------- */
+
+function formatMoney(n: number) {
+  return n.toLocaleString(undefined, { style: "currency", currency: "USD" });
+}
+
+function SummaryCard({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-2xl border border-neutral-800 bg-neutral-950 p-5">
+      <p className="text-sm text-neutral-400">{label}</p>
+      <p className="mt-2 text-2xl font-semibold">{value}</p>
     </div>
   );
 }
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
