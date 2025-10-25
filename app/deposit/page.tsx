@@ -3,7 +3,8 @@ import React from 'react';
 
 
 
-export default function Withdraw(){
+
+export default function Deposit(){
     const [show, setShow] = React.useState(true);
 
     return(
@@ -18,7 +19,7 @@ export default function Withdraw(){
 
           </div>
           <div className="text-center font-semibold  text-4xl font-sans">
-            Withdraw Amount 
+            Deposit Amount
           </div>
          
           <form className="mt-8">
@@ -35,17 +36,7 @@ export default function Withdraw(){
               <div className="py-2" x-data="{ show: true }">
                 <span className="px-1 text-sm text-gray-600">Enter Amount</span>
                 <div className="relative">
-                 
                   <input placeholder="₵" type="text" className="text-md block px-3 py-2 rounded-lg w-full 
-                bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
-                focus:placeholder-gray-500
-                focus:bg-black 
-                focus:border-gray-600" />
-                <div className="py-2" x-data="{ show: true }">
-                <span className="px-1 text-sm text-gray-600">Enter Pin</span>
-                <div className="relative"></div> </div>
-
-                 <input placeholder="****" type="password" className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
                 focus:placeholder-gray-500
                 focus:bg-black 
@@ -73,7 +64,7 @@ export default function Withdraw(){
                   <div className="flex justify-between">
                     <button className="mt-3  font-semibold 
                     bg-gray-800 w-full text-white rounded-lg px-37 py-3 block shadow-xl hover:text-white hover:bg-white hover-text-black pl-25">
-                      Cashout
+                      Deposit 
                     </button>
                   </div>
                 </div>

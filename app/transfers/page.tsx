@@ -3,7 +3,7 @@ import React from 'react';
 
 
 
-export default function Deposit(){
+export default function Transfer(){
     const [show, setShow] = React.useState(true);
 
     return(
@@ -18,13 +18,13 @@ export default function Deposit(){
 
           </div>
           <div className="text-center font-semibold  text-4xl font-sans">
-            Deposit Amount
+            Transfer Amount 
           </div>
          
           <form className="mt-8">
             <div className="mx-auto max-w-lg">
               <div className="py-2">
-                <span className="px-1 text-sm text-gray-600">Enter  Email </span>
+                <span className="px-1 text-sm text-gray-600">Enter  Your Email </span>
                 <input placeholder=" email" type="email"
                className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
@@ -33,9 +33,19 @@ export default function Deposit(){
                 focus:border-gray-600" /> 
               </div>
               <div className="py-2" x-data="{ show: true }">
-                <span className="px-1 text-sm text-gray-600">Enter Amount</span>
+                <span className="px-1 text-sm text-gray-600">Enter Receiver's Email</span>
                 <div className="relative">
+                 
                   <input placeholder="₵" type="text" className="text-md block px-3 py-2 rounded-lg w-full 
+                bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
+                focus:placeholder-gray-500
+                focus:bg-black 
+                focus:border-gray-600" />
+                <div className="py-2" x-data="{ show: true }">
+                <span className="px-1 text-sm text-gray-600">Enter Amount</span>
+                <div className="relative"></div> </div>
+
+                 <input placeholder="₵" type="text" className="text-md block px-3 py-2 rounded-lg w-full 
                 bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
                 focus:placeholder-gray-500
                 focus:bg-black 
@@ -63,7 +73,7 @@ export default function Deposit(){
                   <div className="flex justify-between">
                     <button className="mt-3  font-semibold 
                     bg-gray-800 w-full text-white rounded-lg px-37 py-3 block shadow-xl hover:text-white hover:bg-white hover-text-black pl-25">
-                      Deposit 
+                      Cashout
                     </button>
                   </div>
                 </div>
