@@ -1,10 +1,14 @@
+
 import React, { FormEvent } from "react";
+import Link from 'next/link'
+
+
 
 export default function Signup() {
-
-
+    
 
     return (
+ 
         <div>
             <div className="relative min-h-screen  grid bg-black ">
                 <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 ">
@@ -23,7 +27,7 @@ export default function Signup() {
                             <div className="lg:text-left text-center">
                                 <div className="flex items-center justify-center ">
                                     <div className="bg-black flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                                        <form className="flex flex-col space-y-8 mt-10" >
+                                        <form          className="flex flex-col space-y-8 mt-10" >
                                             <label className="font-bold text-lg text-white ">Enter email</label>
                                             <input
                                                 type="text"
@@ -42,10 +46,15 @@ export default function Signup() {
                                                 placeholder="full name "
                                                 className="border rounded-lg py-3 px-3 mt-4 bg-black border-indigo-600 placeholder-white-500 text-white"
                                             />
-                                            <button type="submit" className="border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold">
-                                                Create Account
-                                            </button>
-                                        </form>
+                              
+    
+                            <button type="button"
+                            className="border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold">
+                        <Link href='/login'>                 Create Account
+                                  </Link>      </button>            
+                                    
+    </form>
+                                        
                                     </div>
                                 </div>
                             </div>

@@ -16,21 +16,28 @@ import {
 } from "lucide-react";
 
 // -----------------------------
-// Nice, sticky, glassy Navbar
-// - Tailwind only (no external UI deps)
+// Sticky + glassy Navbar (Tailwind only)
 // - Active-link highlight
 // - Mobile drawer
-// - Optional dark/light toggle
+// - No invalid nesting
 // -----------------------------
 
 const NAV_ITEMS = [
-  { label: "Home", href: "/", icon: HomeIcon },
-  { label: "Deposit", href: "/deposit", icon: PiggyBank },
-  { label: "Withdrawals", href: "/withdraw", icon: Wallet },
-  { label: "Transfers", href: "/transfers", icon: ArrowLeftRight },
+  { label: "Home", href: "/", icon: HomeIcon },         // change to "/home" if you have app/home/page.tsx
+  { label: "Deposit", href: '/deposit', icon: PiggyBank },
+  { label: "Withdrawals", href: '/withdraw', icon: Wallet },
+  { label: "Transfers", href: '/transfers', icon: ArrowLeftRight },
 ];
 
-function NavLink({ href, label, Icon }: { href: string; label: string; Icon: any }) {
+function NavLink({
+  href,
+  label,
+  Icon,
+}: {
+  href: string;
+  label: string;
+  Icon: React.ComponentType<{ className?: string }>;
+}) {
   const pathname = usePathname();
   const isActive = href === "/" ? pathname === "/" : pathname?.startsWith(href);
 
@@ -38,10 +45,9 @@ function NavLink({ href, label, Icon }: { href: string; label: string; Icon: any
     <Link
       href={href}
       className={
-        "group relative inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors " +
-        (isActive
-          ? "text-white"
-          : "text-zinc-300 hover:text-white")
+        "group relative inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium " +
+        "transition text-zinc-300 hover:text-white " +
+        (isActive ? "text-white" : "")
       }
       aria-current={isActive ? "page" : undefined}
     >
@@ -50,8 +56,9 @@ function NavLink({ href, label, Icon }: { href: string; label: string; Icon: any
       {/* animated underline */}
       <span
         className={
-          "absolute inset-x-2 -bottom-0.5 h-px origin-left scale-x-0 rounded-full bg-gradient-to-r from-white/60 via-white to-white/60 transition-transform group-hover:scale-x-100 " +
-          (isActive ? "!scale-x-100" : "")
+          "absolute inset-x-2 -bottom-0.5 h-px origin-left scale-x-0 rounded-full " +
+          "bg-gradient-to-r from-white/60 via-white to-white/60 transition-transform " +
+          (isActive ? "scale-x-100" : "group-hover:scale-x-100")
         }
       />
     </Link>
@@ -61,7 +68,7 @@ function NavLink({ href, label, Icon }: { href: string; label: string; Icon: any
 export default function Navbar() {
   const [open, setOpen] = useState(false);
 
-  // Lock body scroll when mobile menu is open
+  // Lock body scroll when drawer is open
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -72,14 +79,17 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl supports-[backdrop-filter]:bg-black/30">
+    <header className="sticky top-0 z-[70] w-full border-b border-white/10 bg-black/35 backdrop-blur-xl [@supports(backdrop-filter:blur(0))]:bg-black/25">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
         {/* Brand */}
         <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-zinc-200/70 to-white/90 text-black shadow-sm">
+          <div className="flex h-8 w-8 items-center justify-center rounded-xl bg-gradient-to-br from-white/70 to-white text-black shadow-sm ring-1 ring-inset ring-white/20">
             <ArrowLeftRight className="h-4 w-4" />
           </div>
-          <Link href="/" className="select-none text-base font-semibold tracking-tight text-white">
+          <Link
+            href="/"
+            className="select-none text-base font-semibold tracking-tight text-white"
+          >
             Steeze Bank
           </Link>
         </div>
@@ -87,7 +97,12 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden items-center gap-1 lg:flex">
           {NAV_ITEMS.map((item) => (
-            <NavLink key={item.href} href={item.href} label={item.label} Icon={item.icon} />
+            <NavLink
+              key={item.href}
+              href={item.href}
+              label={item.label}
+              Icon={item.icon}
+            />
           ))}
         </div>
 
@@ -116,18 +131,19 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile drawer */}
-      <div
-        className={
-          "fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm transition-opacity lg:hidden " +
-          (open ? "opacity-100" : "pointer-events-none opacity-0")
-        }
-        onClick={() => setOpen(false)}
-      />
+      {/* Mobile overlay (fully removed when closed to avoid blocking clicks) */}
+      {open && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm lg:hidden"
+          onClick={() => setOpen(false)}
+        />
+      )}
 
+      {/* Drawer */}
       <aside
         className={
-          "fixed inset-y-0 right-0 z-[61] w-[84%] max-w-sm translate-x-full border-l border-white/10 bg-[#0b0b0b] p-4 shadow-2xl transition-transform lg:hidden " +
+          "fixed inset-y-0 right-0 z-[61] w-[84%] max-w-sm border-l border-white/10 " +
+          "bg-[#0b0b0b]/95 p-4 shadow-2xl transition-transform duration-200 lg:hidden " +
           (open ? "translate-x-0" : "translate-x-full")
         }
         role="dialog"
@@ -186,20 +202,18 @@ export default function Navbar() {
 // ---- Tiny Presentational Pieces ----
 function AvatarCircle({ initials = "?" }: { initials?: string }) {
   return (
-    <div className="inline-flex h-8 w-8 select-none items-center justify-center rounded-full bg-gradient-to-br from-white/80 to-white text-black shadow">
+    <div className="inline-flex h-8 w-8 select-none items-center justify-center rounded-full bg-gradient-to-br from-white/80 to-white text-black shadow ring-1 ring-inset ring-white/30">
       <span className="text-xs font-bold tracking-wide">{initials}</span>
     </div>
   );
 }
 
 function ThemeToggle({ compact = false }: { compact?: boolean }) {
-  // Uses next-themes if available, falls back to classList toggle
+  // no dependency on next-themes; just toggles .dark on <html>
   const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    const root = document.documentElement;
-    const is = root.classList.contains("dark");
-    setIsDark(is);
+    setIsDark(document.documentElement.classList.contains("dark"));
   }, []);
 
   function toggle() {
@@ -219,9 +233,9 @@ function ThemeToggle({ compact = false }: { compact?: boolean }) {
       }
     >
       {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
-      {!compact && <span className="text-sm font-medium">{isDark ? "Light" : "Dark"}</span>}
+      {!compact && (
+        <span className="text-sm font-medium">{isDark ? "Light" : "Dark"}</span>
+      )}
     </button>
   );
 }
-
-

@@ -1,8 +1,11 @@
-import React, { FormEvent } from "react";
+"use client";
+import { useRouter } from "next/navigation";
 
+import React, { FormEvent } from "react";
+import Link from 'next/link'
 export default function Login() {
- 
-    
+  const router = useRouter();
+
 
     return (
         <div>
@@ -27,22 +30,24 @@ export default function Login() {
                                             <label className="font-bold text-lg text-white ">Enter Email</label>
                                             <input
                                                 type="text"
-                                                placeholder="Account number"
+                                                placeholder="   Email"
                                                 className="border rounded-lg py-3 px-3 mt-4 bg-black border-indigo-600 placeholder-white-500 text-white"
                                             />
                                             <label className="font-bold text-lg text-white">Enter Password </label>
-                                             <input
+                                            <input
                                                 type="password"
                                                 placeholder="****"
                                                 className="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
                                             />
+
+
+
+                                               <button type="button" 
                                            
-                                   
-                                            
-                                            <button type="submit" className="border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold">
-                                                Login
-                                            </button>
-                                           <a href="" ><div className="text-blue-400">forgot password? Reset password</div></a>
+                                               className="border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold">
+                                     <Link href="/home"   >           Login
+                                        </Link>         </button>
+                                            <a href="" ><div className="text-blue-400">forgot password? Reset password</div></a>
                                         </form>
                                     </div>
                                 </div>
@@ -54,6 +59,6 @@ export default function Login() {
 
         </div>
 
-       
+
     );
 }
