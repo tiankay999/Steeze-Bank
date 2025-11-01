@@ -5,15 +5,15 @@ export default function Footer(){
         <div className="grid gap-6 py-8 sm:grid-cols-3 ">
           {/* Brand */}
           <div>
-            <h3 className="text-lg font-semibold">YourBrand</h3>
+            <h3 className="text-lg font-semibold">STEEZE BANK</h3>
             <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-              Building delightful web experiences.
+              Building delightful Banking  experiences.
             </p>
           </div>
 
           {/* Links */}
           <nav aria-label="Footer" className="grid grid-cols-2 gap-3 text-sm">
-            <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
+            <a href="/about" className="text-neutral-700 hover:underline dark:text-neutral-300">
               About
             </a>
             <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
@@ -22,7 +22,7 @@ export default function Footer(){
             <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
               Projects
             </a>
-            <a href="#" className="text-neutral-700 hover:underline dark:text-neutral-300">
+            <a href="/contact" className="text-neutral-700 hover:underline dark:text-neutral-300">
               Contact
             </a>
           </nav>
@@ -46,7 +46,7 @@ export default function Footer(){
         </div>
 
         <div className="flex flex-col items-center justify-between gap-3 border-t py-4 text-sm text-neutral-600 dark:text-neutral-400 sm:flex-row ">
-          <p>© {2025} YourBrand. All rights reserved.</p>
+          <p>© {2025} STEEZE BANK. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a href="#" aria-label="Twitter" className="hover:underline">Twitter</a>
             <a href="#" aria-label="GitHub" className="hover:underline">GitHub</a>
