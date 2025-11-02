@@ -1,11 +1,11 @@
 import Footer from "../components/footer";
 import Navbar from "../components/navbar";
-
+import Link from "next/link";
 
 
 // app/page.tsx
 export default function DashboardPage() {
-    <header><Navbar/></header>
+    
   // --- mock data you'd normally fetch from your DB/API ---
   const userName = "Steeze";
   const accounts = [
@@ -26,7 +26,12 @@ export default function DashboardPage() {
   const monthOut = recent.filter(r => r.type === "debit").reduce((s, r) => s + Math.abs(r.amount), 0);
 
   return (
+ 
+<div >
+  
     <main className="mx-auto max-w-6xl px-4 py-8 space-y-8">
+        
+
       {/* Top Bar / Greeting */}
       <section className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
         <div>
@@ -34,7 +39,26 @@ export default function DashboardPage() {
           <p className="text-sm text-neutral-400">
             Here’s a quick overview of your accounts and recent activity.
           </p>
+
         </div>
+     
+<div className="ml-125 space-10">
+   < Link  href="/profile" >   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-20">
+  <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+  
+  />
+
+</svg>
+</Link>
+
+
+</div>
+
+
+
+
+
+
 
         {/* Quick Actions */}
         <div className="flex gap-2">
@@ -137,7 +161,7 @@ export default function DashboardPage() {
       </section>
       
     </main>
-   
+   </div>
   );
 }
   <Footer/>

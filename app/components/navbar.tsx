@@ -45,7 +45,7 @@ function NavLink({
     <Link
       href={href}
       className={
-        "group relative inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium " +
+        "group relative inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium  " +
         "transition text-zinc-300 hover:text-white " +
         (isActive ? "text-white" : "")
       }
@@ -79,7 +79,7 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-[70] w-full border-b border-white/10 bg-black/35 backdrop-blur-xl [@supports(backdrop-filter:blur(0))]:bg-black/25">
+    <header className="sticky top-0 z-[70] w-full border-b border-white/10 bg-black/35 backdrop-blur-xl [@supports(backdrop-filter:blur(0))]:bg-black/25 ">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 md:px-6">
         {/* Brand */}
         <div className="flex items-center gap-2">
