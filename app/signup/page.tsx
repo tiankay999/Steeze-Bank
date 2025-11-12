@@ -1,11 +1,59 @@
-
+"use client";
 import React, { FormEvent } from "react";
-import Link from 'next/link'
-
-
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
-    
+
+  
+  const router = useRouter();
+
+  const[email,setEmail]=useState("")
+  const[password,setPassword]=useState("")
+  const[name,setName]=useState("")
+  const[error,setError]=useState("")
+  const[load,setLoading]=useState(false)
+
+  const handleSubmit= async(e:React.FormEvent<HTMLFormElement>)=>{
+    e.preventDefault();
+    setError("")
+    setLoading(true)
+
+
+    try{
+   const res =  await fetch ("http://localhost:5005/register",{
+    method:"POST",
+    headers:{
+    "Content-Type":"application/json"
+    },
+    body: JSON.stringify({name,email,password})
+   }
+   );
+
+  const  data =  await res.json();
+
+   if (!res.ok){
+    throw new Error (data.message ||" Registration  Failed Try Again")
+
+   }
+ 
+localStorage.setItem("token",data.token)
+
+router.push("/login")
+
+
+    }catch(error){
+        const msg=
+        error instanceof Error ? error.message : "Something went wrong try Again";
+        setError(msg)
+
+    }finally{
+        setLoading(false)
+    }
+
+  }
+
+
 
     return (
  
@@ -27,31 +75,42 @@ export default function Signup() {
                             <div className="lg:text-left text-center">
                                 <div className="flex items-center justify-center ">
                                     <div className="bg-black flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                                        <form          className="flex flex-col space-y-8 mt-10" >
+                                        <form    onSubmit={handleSubmit}
+                                              className="flex flex-col space-y-8 mt-10" >
                                             <label className="font-bold text-lg text-white ">Enter email</label>
                                             <input
+                                            value={email}
+                                            onChange={(e)=>setEmail(e.target.value)}
                                                 type="text"
                                                 placeholder="Email"
                                                 className="border rounded-lg py-3 px-3 mt-4 bg-black border-indigo-600 placeholder-white-500 text-white"
                                             />
                                             <label className="font-bold text-lg text-white">Password</label>
                                             <input
+                                            value={password}
+                                            onChange={(e)=>setPassword(e.target.value)}
                                                 type="password"
                                                 placeholder="****"
                                                 className="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
+                                                required
                                             />
                                             <label className="font-bold text-lg text-white ">Enter full name </label>
                                             <input
+                                            value={name}
+                                            onChange={(e)=>setName(e.target.value)}
                                                 type="full name "
                                                 placeholder="full name "
                                                 className="border rounded-lg py-3 px-3 mt-4 bg-black border-indigo-600 placeholder-white-500 text-white"
+                                                required
                                             />
-                              
+                                         {error && (
+                                            <p className="text-red-400 text-sm border-red-500/30 rounded p-2"></p>
+                                         )}
     
-                            <button type="button"
+                            <button type="submit"
                             className="border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold">
-                        <Link href='/login'>                 Create Account
-                                  </Link>      </button>            
+                                      {load? "Creating Account....": "Create Account"}
+                                 </button>            
                                     
     </form>
                                         
