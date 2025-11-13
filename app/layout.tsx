@@ -2,7 +2,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "./components/navbar";
-import Login from "./login/page";
+
+
+
 export const metadata: Metadata = {
   title: "Tian Kay Bank App",
   description:
@@ -18,12 +20,9 @@ export default function RootLayout({
     <html lang="en" className="dark">
       <body className="min-h-screen bg-black text-white antialiased">
         {/* put navbar INSIDE body */}
-        
-
-       
+     
         <main className="mx-auto max-w-7xl px-4 py-6">{children}</main>
-
-    
+      
        
       </body>
     </html>

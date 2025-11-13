@@ -4,7 +4,7 @@ import Link from "next/link"; // ← added
 
 // app/page.tsx
 export default function DashboardPage() {
-  const [userName, setUserName] = useState("John Doe");
+  const [username, setUsername] = useState("");
   const [balance, setBalance] = useState(0);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -40,7 +40,6 @@ export default function DashboardPage() {
   fetchBalance();
 }, []);
 
-
   useEffect(() => {
     // Fetch transactions from the API
     const fetchTransactions = async () => {
@@ -64,19 +63,38 @@ export default function DashboardPage() {
     fetchTransactions();
   }, []);
 
+  useEffect(() => {
+    // Fetch transactions from the API
+    const fetchUsername = async () => {
+      try {
+        const res = await fetch("http://localhost:5005/username", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data2 = await res.json();
+        setUsername(data2?.username ?? []);
+      } catch (err: any) {
+        setError(err?.message ?? String(err));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsername();
+  }, []);
+
   return (
-    <main className="min-h-screen bg-black text-white p-6 space-y-6">
+    <main className="min-h-screen  bg-black text-white   space-y-6">
       {/* header */}
+
+      <div className="text-2xl font-italic font-semibold"> You are Welcome to Steeze Bank,{username}</div>
       <header className="flex items-center justify-between">
         <h1 className="text-xl font-semibold">Dashboard</h1>
 
-        {/* ← added: deposit button that routes to /deposit */}
-        <Link
-          href="/deposit"
-          className="text-sm px-3 py-2 rounded-xl bg-emerald-500/10 border border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/20"
-        >
-          Deposit
-        </Link>
+       
 
         <span className="text-xs text-neutral-400">Last updated: now</span>
       </header>

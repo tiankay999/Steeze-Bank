@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import SuccessAlert from '../components/successAlert';
+import SuccessAlert from '../../components/successAlert';
 
 
 export default function Withdraw() {

@@ -1,4 +1,5 @@
-import LoadingSkeleton from "../components/load";
+import LoadingSkeleton from "@/app/components/load";
+
 
 export default function Loginload(){
     return <LoadingSkeleton/>

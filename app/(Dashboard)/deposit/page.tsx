@@ -2,7 +2,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import { useState } from 'react';
-import SuccessAlert from '../components/successAlert';
+import SuccessAlert from '../../components/successAlert';
 
 export default function Deposit(){
   
