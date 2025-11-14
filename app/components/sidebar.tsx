@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/router";
-
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -18,7 +17,6 @@ const IconArrowUpToLine = (props: React.SVGProps<SVGSVGElement>) => (
 const IconRepeat = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m17 2 4 4-4 4"/><path d="M3 11v-1a4 4 0 0 1 4-4h14"/><path d="m7 22-4-4 4-4"/><path d="M21 13v1a4 4 0 0 1-4 4H3"/></svg>
 );
-
 type NavItem = {
   name: string;
   href: string;
@@ -33,6 +31,11 @@ const navItems: NavItem[] = [
 ];
 
 export default function Sidebar() {
+  
+const[username,setUsername]=useState("");
+const[error,setError]=useState<string|undefined>(undefined);
+const[loading,setLoading]=useState(true);
+
   const pathname = usePathname(); // gives you current route, e.g. "/home"
 
   const baseClasses =
@@ -60,21 +63,46 @@ export default function Sidebar() {
         
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
       }
 
+useEffect(() => {
+    // Fetch transactions from the API
+    const fetchUsername = async () => {
+      try {
+        const res = await fetch("http://localhost:5005/username", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        const data2 = await res.json();
+        setUsername(data2?.username ?? []);
+      } catch (err: any) {
+        setError(err?.message ?? String(err));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsername();
+  }, []);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 
   return (
     <aside
@@ -121,7 +149,7 @@ export default function Sidebar() {
               TK
             </div>
             <div>
-              <p className="text-sm font-medium text-white">Admin User</p>
+              <p className="text-sm font-medium text-white">{username}</p>
            <select  className="text-xs text-gray-500">Logged in</select>
               <button
                 onClick={HandleLogout}

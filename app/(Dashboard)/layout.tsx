@@ -1,4 +1,6 @@
-// app/(dashboard)/layout.tsx
+"use client";
+
+
 import Sidebar from "../components/sidebar";
 
 export default function DashboardLayout({
@@ -8,9 +10,10 @@ export default function DashboardLayout({
 }) {
 return (
     <div className="flex min-h-screen bg-black text-white">
-      <Sidebar />
 
-      {/* one place for padding & shift */}
+     
+
+      <Sidebar />
       <main className="flex-1 ml-64 p-6">
         {children}
       </main>
