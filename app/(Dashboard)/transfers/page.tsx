@@ -1,7 +1,8 @@
 "use client"
 import React, { use, useState } from 'react';
-
+import { RefreshCcw } from 'lucide-react';
 import SuccessAlert from '../../components/successAlert';
+import { useEffect } from 'react';
 
 export default function Transfer() {
   const [receiveremail, setReceiveremail] = useState('')
@@ -10,7 +11,7 @@ export default function Transfer() {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [successMsg, setSuccessMsg] = useState("")
-    ;
+  const [balance, setBalance] = useState(0);  
 
   const MIN_MS = 800;
 
@@ -48,99 +49,145 @@ export default function Transfer() {
     }
 
   }
+  
+ useEffect(() => {
+  const fetchBalance = async () => {
+    try {
+      const res = await fetch("http://localhost:5005/check-balance", {
+        method: "GET", 
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || `HTTP ${res.status}`);
+      }
 
+      const data = await res.json();
+      // data.balance should be a number now
+      setBalance(Number(data.balance));
+    } catch (e:any) {
+      console.error(e);
+      setError(e.message || "Failed to fetch balance");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  fetchBalance();
+}, []);
 
 
   return (
-
-
-
     <>
-      {successMsg && (
-        <SuccessAlert
-          message={successMsg}
-          onClose={() => setSuccessMsg(``)}
-        />
-      )}
+      <SuccessAlert
+        message={successMsg}
+        onClose={() => setSuccessMsg('')}
+      />
 
+      {/* Dark background for the overall page */}
+      <div className="min-h-screen bg-black flex items-center justify-center p-4 font-sans antialiased">
+        
+        {/* The main card - Darker gray for contrast */}
+        <div className="w-full max-w-lg bg-gray-800 shadow-2xl rounded-xl p-8 space-y-8 border border-gray-700">
+          
+          {/* Header */}
+          <div className="text-center">
+            <h1 className="text-3xl font-extrabold text-white border-b border-gray-700 pb-3">
+              Peer-to-Peer Transfer
+            </h1>
+            <p className="mt-2 text-md text-gray-400">
+              Send money instantly to anyone using their email address.
+            </p>
+          </div>
 
-      <div className="container max-w-full mx-auto py-24 px-6 ">
-        <div className="font-sans">
-          <div className="max-w-sm mx-auto px-6">
-            <div className="relative flex flex-wrap">
-              <div className="w-full relative border-3 rounded-3xl m-5 p-7 shadow-lg mt-0 "   >  <div className="mt-6">
-                <div className="mb-5 pb-1border-b-2 text-center font-base text-gray-700 ">
-
-                </div>
-                <div className="text-center font-semibold  text-4xl font-sans">
-                  Transfer Amount
-                </div>
-
-                {error && (<p className='text-sm text-red-100'>{error}</p>)}
-
-
-
-                <form
-                  onSubmit={HandleTransfer}
-                  className="mt-8">
-                  <div className="mx-auto max-w-lg">
-                    <div className="py-2">
-                      <span className="px-1 text-sm text-gray-600">Enter  Your Email </span>
-                      <input
-                        value={receiveremail}
-                        onChange={(e) => setReceiveremail(e.target.value)}
-                        placeholder=" email"
-                        type="email"
-                        className="text-md block px-3 py-2 rounded-lg w-full 
-                bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
-                focus:placeholder-gray-500
-                focus:bg-black 
-                focus:border-gray-600" />
-                    </div>
-                    <div className="py-2" x-data="{ show: true }">
-
-
-
-                      <div className="py-2" x-data="{ show: true }">
-                        <span className="px-1 text-sm text-gray-600">Enter Amount</span>
-                        <div className="relative"></div> </div>
-
-                      <input
-                        value={amount}
-                        onChange={(e) => setAmount(e.target.value)}
-                        placeholder="₵" type="text" className="text-md block px-3 py-2 rounded-lg w-full 
-                bg-black border-2 border-gray-300 placeholder-gray-600 shadow-md
-                focus:placeholder-gray-500
-                focus:bg-black 
-                focus:border-gray-600" />
-                      <div className="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
-
-
-
-
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex justify-between">
-                    <button
-                      type='submit'
-
-                      className="mt-3  font-semibold 
-                    bg-gray-800 w-full text-white rounded-lg px-37 py-3 block shadow-xl hover:text-white  hover-text-black pl-25">
-                      {loading ? 'Processing...' : 'Transfer Amount'}
-                    </button>
-                  </div>
-
-                </form>
-
-
-
-              </div>
-              </div>
-
+          {/* Account Summary/Balance Context - Highlighted gray area */}
+          <div className="bg-gray-700 border border-gray-600 p-5 rounded-lg flex flex-col space-y-1">
+            <span className="text-sm font-medium text-gray-300">Sending Account: Primary Checking (***1234)</span>
+            <div className='flex justify-between items-center'>
+                <span className="text-xl font-bold text-gray-200">Available Balance</span>
+                {/* Balance uses white text for high contrast */}
+                <span className="text-2xl font-extrabold text-emerald-400">
+                    ${balance}
+                </span>
             </div>
           </div>
+
+          {/* Error Display (Professional Styling - Dark background, maintained red highlight for error severity) */}
+          {error && (
+            <div className="bg-gray-800 border-l-4 border-red-500 text-gray-100 p-4 rounded-lg text-sm font-medium transition-all" role="alert">
+              <p className="font-semibold mb-1 text-red-400">Transaction Alert:</p>
+              <p>{error}</p>
+            </div>
+          )}
+
+          {/* Transfer Form */}
+          <form className="space-y-6" onSubmit={HandleTransfer}>
+            
+            {/* Recipient Email Input */}
+            <div className="space-y-2">
+              <label htmlFor="receiveremail" className="block text-lg font-semibold text-gray-300">
+                Recipient Email
+              </label>
+              <input
+                id="receiveremail"
+                type="email"
+                placeholder="recipient@example.com"
+                required
+                value={receiveremail}
+                onChange={(e) => setReceiveremail(e.target.value)} 
+                className="block w-full px-4 py-3 border-2 border-gray-600 rounded-xl shadow-inner text-lg bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-700 focus:border-white transition duration-200"
+              />
+            </div>
+
+            {/* Amount Input */}
+            <div className="space-y-2">
+              <label htmlFor="amount" className="block text-lg font-semibold text-gray-300">
+                Transfer Amount
+              </label>
+              
+              {/* Input Field with Fixed Currency Prefix - Black input area with white text */}
+              <div className="relative">
+                <span className="absolute left-0 inset-y-0 flex items-center pl-4 text-3xl font-bold text-gray-500">
+                  $
+                </span>
+                <input
+                  id="amount"
+                  type="text"
+                  inputMode="decimal"
+                  placeholder="0.00"
+                  required
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ''))} 
+                  className="block w-full pl-10 pr-4 py-4 border-2 border-gray-600 rounded-xl shadow-inner text-3xl font-extrabold bg-gray-900 text-white placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-gray-700 focus:border-white transition duration-200"
+                />
+              </div>
+            </div>
+
+            {/* Transfer Button - High contrast black button with white text */}
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full flex items-center justify-center py-4 px-4 border border-transparent rounded-xl shadow-lg text-xl font-bold text-white bg-black hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-white transition duration-200 disabled:opacity-30 disabled:cursor-not-allowed transform hover:scale-[1.005] focus:ring-offset-gray-900"
+              >
+                {loading ? (
+                  <span className="flex items-center">
+                    <RefreshCcw className="animate-spin h-5 w-5 mr-3" />
+                    Processing Transfer...
+                  </span>
+                ) : 'Confirm Transfer'}
+              </button>
+            </div>
+          </form>
+
+          {/* Footer/Disclaimer */}
+          <p className="text-center text-xs text-gray-600 mt-6 pt-4 border-t border-gray-700">
+            Transfers are instantaneous. Review all recipient details carefully before submitting.
+          </p>
         </div>
       </div>
     </>

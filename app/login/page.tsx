@@ -39,7 +39,7 @@ export default function Login() {
 localStorage.setItem("token",data.token)
 
 
-router.push("/home")
+router.push("/otp")
 
 
     }catch(error){
@@ -55,68 +55,80 @@ router.push("/home")
 
 
 //page//
-    return (
-        <div>
-            <div className="relative min-h-screen  grid bg-black ">
-                <div className="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0 ">
-                    <div
-                        className="relative sm:w-1/2 xl:w-3/5 bg-blue-500 h-full hidden md:flex flex-auto items-center justify-center p-10 overflow-hidden  text-white bg-no-repeat bg-cover relative"
-                        style={{ backgroundImage: "url('https://i.postimg.cc/2SnsYPyC/Chat-GPT-Image-Oct-22-2025-10-34-21-PM.png')" }}
-                    >
-                        <div className="absolute bg-black  opacity-25 inset-0 z-0"></div>
-                        <div className="w-full  lg:max-w-2xl md:max-w-md z-10 items-center text-center ">
-                            <div className=" font-bold leading-tight mb-6 mx-auto w-full content-center items-center "></div>
-                        </div>
-                    </div>
+     return(
+        
+                     
+        
+        <div 
+         className="bg-[url('/steeze.png')] min-h-screen max-w-screen flex items-center justify-center bg-cover bg-center">
 
-                    <div
-                    
-                     className="md:flex md:items-center md:justify-left w-full sm:w-auto md:h-full xl:w-1/2 p-8  md:p-10 lg:p-14 sm:rounded-lg md:rounded-none ">
-                        <div className="max-w-xl w-full space-y-12">
-                            <div className="lg:text-left text-center">
-                                <div className="flex items-center justify-center ">
-                                    <div className="bg-black flex flex-col w-80 border border-gray-900 rounded-lg px-8 py-10">
-                                        <form
-                                        onSubmit={handleSubmit}
-                                        className="flex flex-col space-y-8 mt-10" >
-                                            <label className="font-bold text-lg text-white ">Enter Email</label>
-                                            <input
-                                            required
-                                            value={email}
-                                            onChange={(e)=>setEmail(e.target.value)}
-                                                type="email"
-                                                placeholder="   Email"
-                                                className="border rounded-lg py-3 px-3 mt-4 bg-black border-indigo-600 placeholder-white-500 text-white"
-                                            />
-                                          <label className="font-bold text-lg text-white">Enter Password </label>
-                                            <input
-                                              required
-                                            value={password}
-                                            onChange={(e)=>setPassword(e.target.value)}
-                                                type="password"
-                                                placeholder="****"
-                                                className="border rounded-lg py-3 px-3 bg-black border-indigo-600 placeholder-white-500 text-white"
-                                            />
-                                             {error && (<p className="text-red-200 text-sm border-red-500/30 rounded p-2"> {error}</p>)}
-
-
-                                               <button type="submit" 
-                                           
-                                               className="border border-indigo-600 bg-black text-white rounded-lg py-3 font-semibold">
-                                             {  load ? "logging In...":"Login " }
-                                         </button>
-                                            <a href="" ><div className="text-blue-400">forgot password? Reset password</div></a>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <div className="w-170 max-w-md mx-auto shadow-2xl rounded-lg overflow-hidden bg- backdrop-blur-sm bg-opacity-90">
+        
+        <div className="p-8 space-y-6 text-white">
+            <h2 className="text-2xl font-bold text-center mb-6 ">Sign in to your account</h2>
+            
+            <form className="space-y-6"
+            
+            onSubmit={handleSubmit}
+            >
+                {error && <p className="text-red-500 text-sm">{error}</p>}
+                
+                <div>
+                    <label htmlFor="email" className="font-semibold font-medium block mb-2 text-white">Enter your Email </label>
+                    <input 
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
+                        type="text" 
+                        name="text" 
+                        id="text" 
+                        placeholder="@email.com" 
+                        className="w-full p-3 rounded-md border border-gray-700 bg-transparent text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out"
+                        required
+                    />
                 </div>
-            </div>
 
-        </div>
+                <div>
+                    <label htmlFor="password" className="font-semibold font-medium block mb-2 text-white">Enter Password</label>
+                    <input 
+                    value={password}
+                    onChange={(e)=>setPassword(e.target.value)}
+                        type="password" 
+                        name="password" 
+                        id="password" 
+                        placeholder="••••••••" 
+                        className="w-full p-3 rounded-md border border-gray-700 bg-transparent text-white placeholder-gray-400 focus:ring-blue-500 focus:border-blue-500 shadow-sm transition duration-150 ease-in-out"
+                        required
+                    />
+                </div>
 
+                <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center">
+                        <input 
+                        required
+                            id="remember-me" 
+                            name="remember-me" 
+                            type="checkbox" 
+                            className="h-4 w-4 text-blue-600 bg-gray-700 border-gray-700 rounded focus:ring-blue-500"
+                        />
+                        <label htmlFor="remember-me" className="ml-2 block text-white">Remember me</label>
+                    </div>
+                  
+                </div>
+
+                <button 
+                disabled={load}
+                    type="submit" 
+                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                >
+                   {load ? "Signing In..." : "Sign In"}
+                </button>
+            </form>
+
+            
+         </div>
+    </div>
+
+</div>
 
     );
 }

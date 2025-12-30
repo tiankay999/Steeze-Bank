@@ -2,7 +2,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
 
 // ICONS (same as yours)
 const IconLayoutDashboard = (props: React.SVGProps<SVGSVGElement>) => (
@@ -88,6 +88,21 @@ useEffect(() => {
     fetchUsername();
   }, []);
 
+ const handleLogout = async () => {
+   
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      
+    redirect("/login");
+      // Optionally, redirect or update UI here
+   
+    
+  };
+   
+    
+
+
+
 
 
 
@@ -103,7 +118,7 @@ useEffect(() => {
 
 
   
-
+  
   return (
     <aside
       className="fixed top-0 left-0 z-40 w-64 h-screen 
@@ -152,7 +167,7 @@ useEffect(() => {
               <p className="text-sm font-medium text-white">{username}</p>
            <select  className="text-xs text-gray-500">Logged in</select>
               <button
-                onClick={HandleLogout}
+                onClick={ handleLogout}
                 className="text-xs text-red-500 hover:underline"
               >
                 Logout
@@ -163,4 +178,4 @@ useEffect(() => {
       </div>
     </aside>
   );
-}
+}                  

@@ -38,7 +38,7 @@ export default function User_Profile() {
 
     console.log("saving profile data:", formData);
 
-    // later you can send it to backend here with fetch("/api/profile", {...})
+  
   }
 
   return (
