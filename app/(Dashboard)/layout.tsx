@@ -13,6 +13,7 @@ return (
   
     <div className="flex min-h-screen bg-black text-white">
 
+<Sidebar/>
      
 
       

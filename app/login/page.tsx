@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import React, { FormEvent } from "react";
+import Link from "next/link";
 
 export default function Login() {
   //form functionality//
@@ -122,6 +123,7 @@ router.push("/otp")
                 >
                    {load ? "Signing In..." : "Sign In"}
                 </button>
+                <Link href="/signup" className="text-blue-400 hover:text-blue-500 cursor-pointer" > Don't have an account ? Sign up</Link>
             </form>
 
             

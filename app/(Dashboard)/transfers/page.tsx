@@ -23,7 +23,7 @@ export default function Transfer() {
     const started = performance.now()
 
     try {
-      const res = await fetch("http://localhost:5005/transfers", {
+      const res = await fetch("http://localhost:5005/transfer", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
